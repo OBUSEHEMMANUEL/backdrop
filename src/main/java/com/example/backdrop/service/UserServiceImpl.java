@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
-    private final String key = "sk_live_477dc8ab7aee59ed474800055c0f90594671514c";
+    private final String SECRET_KEY = System.getenv("YOUR_SECRET_KEY");
 
     @Override
     public RegistrationResponse register(RegistrationRequest registrationRequest) {
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
                         + addBankAccountRequest.accountNumber() + "&bank_code="
                         + addBankAccountRequest.bankCode())
                 .get()
-                .addHeader("Authorization", "Bearer " + key)
+                .addHeader("Authorization", "Bearer " +SECRET_KEY)
                 .build();
         try (ResponseBody response = client.newCall(request).execute().body()) {
             Gson gson = new Gson();
@@ -83,7 +83,7 @@ boolean matches = verifyNames(addBankAccountRequest.accountName(),payStackAccoun
                         + accountNameRequest.accountNumber()+"&bank_code="
                         + accountNameRequest.bankCode())
                 .get()
-                .addHeader("Authorization", "Bearer "+key)
+                .addHeader("Authorization", "Bearer "+SECRET_KEY)
                 .build();
         try(ResponseBody response = client.newCall(request).execute().body()) {
             Gson gson = new Gson();
